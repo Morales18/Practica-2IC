@@ -2,6 +2,7 @@ package Interfaz;
 
 import javax.swing.*;
 
+import Modelo.Algoritmo;
 import Modelo.LecturaDatos;
 
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.io.FileInputStream;
 
 public class vPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
+	private Algoritmo algoritmo;
 	
 	public vPrincipal(){
 	    initGUI();
@@ -36,7 +38,7 @@ public class vPrincipal extends JFrame {
 				if(op == fc.APPROVE_OPTION) {
 					try {
 						File fichero = fc.getSelectedFile();
-						LecturaDatos.readAtributos(fichero);
+						algoritmo.setAtributos(LecturaDatos.readAtributos(fichero));
 						
 					}catch(Exception ex) {
 						JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS ATRIBUTOS", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -56,7 +58,7 @@ public class vPrincipal extends JFrame {
 				if(op == fc.APPROVE_OPTION) {
 					try {
 						File fichero = fc.getSelectedFile();
-						LecturaDatos.readEjemplos(fichero);
+						algoritmo.setEjemplos(LecturaDatos.readEjemplos(fichero));
 						
 					}catch(Exception ex) {
 						JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS EJEMPLOS", "ERROR", JOptionPane.ERROR_MESSAGE);

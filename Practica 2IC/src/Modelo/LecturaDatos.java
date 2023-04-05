@@ -43,6 +43,7 @@ public class LecturaDatos {
 
         buffer.close();
         lector.close();
+        System.out.println(ejemplos);
         return ejemplos;
     }
 }
