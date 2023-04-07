@@ -37,7 +37,17 @@ public class Algoritmo {
 		}
 	}
 	
-	public Nodo ID3() {
+	public Nodo ID3( ArrayList<Atributo> atributos, ArrayList<Ejemplo> ejemplos, Nodo nodo) {
+		String claseMayoritaria = calcularClase(atributos.get(atributos.size()-1));
+		if (atributos.isEmpty()){
+			nodo.setClase(claseMayoritaria);
+		}
+		else{
+			Atributo a = calcularMaximaGanancia(atributos,ejemplos);
+			for (int i = 0; i < a.getPosiblesValores().size();i++){
+				//Nodo hijo = new Nodo(a.getNombre(),a.getPosiblesValores().get(i), )
+			}
+		}
 		return null;
 	}
 	
@@ -81,4 +91,21 @@ public class Algoritmo {
 		
 		return clase.getPosiblesValores().get(pos);
 	}
+	public Atributo calcularMaximaGanancia(ArrayList<Atributo> atributos, ArrayList<Ejemplo> ejemplos){
+		ArrayList<Double> entropias = new ArrayList<Double>();
+		int indice = 0;
+		//La entropía no puede ser mayor que 1 por eso inicializamos el menor a 1
+		double min = 1;
+		for (int i = 0; i < atributos.size() - 1;i++){
+			entropias.set(i, atributos.get(i).calcularEntropiaAtributo(ejemplos, atributos.get(atributos.size()-1)));
+			System.out.println("Entropia: " + atributos.get(i).getNombre() + " "+  entropias.get(i));
+			if(entropias.get(i) < min){
+				indice = i;
+				min = entropias.get(i);
+			} 
+		}
+		return atributos.get(indice);
+
+	}
+
 }

@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import Modelo.Algoritmo;
 import Modelo.LecturaDatos;
+import Modelo.Nodo;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +25,7 @@ public class vPrincipal extends JFrame {
 		JButton cargarAtrib = new JButton("Cargar Atributos");
 		JButton cargarEjemp = new JButton("Cargar Ejemplos");
 		JButton botonCalcular = new JButton("Calcular");
-		JLabel solLabel = new JLabel("Solución: ");
+		JLabel solLabel = new JLabel("Soluciï¿½n: ");
 		JTextField solTB = new JTextField();
 		
 		cargarAtrib.addActionListener(new ActionListener() {
@@ -67,6 +68,15 @@ public class vPrincipal extends JFrame {
 			}
 		});
 		
+		botonCalcular.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Nodo nodo = new Nodo();
+				algoritmo.ID3(algoritmo.getAtributos(), algoritmo.getEjemplos(),nodo );
+				
+			}
+		});
 		mainPanel.setLayout(new GridLayout(1,2));
 		mainPanel.add(cargarAtrib);
 		mainPanel.add(cargarEjemp);
