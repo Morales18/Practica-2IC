@@ -25,6 +25,7 @@ public class LecturaDatos {
         return atributos;
     }
     
+    
     //TODO HACER CATCH
     public static ArrayList<ArrayList<String>> readEjemplos(File fichero) throws IOException {
     	FileReader lector = new FileReader(fichero);
