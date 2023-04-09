@@ -58,10 +58,16 @@ public class Atributo {
 		}
 		double entropiaValor = 0;
 		for(int j = 0; j < posiblesClases.size();j++){
-			entropiaValor += contadorClases[j]* (Math.log(contadorClases[j] / conteo) /Math.log(2));
+			if(contadorClases[j] != 0){
+				System.out.println(contadorClases[j]);
+				double division = (double)contadorClases[j] / (double)conteo;
+				double logaritmo = Math.log(division) / Math.log(2);
+				entropiaValor += contadorClases[j]* logaritmo;
+			}	
 		}
 		return entropiaValor;
 	}
+
 	public Double calcularEntropiaAtributo(ArrayList<Ejemplo> ejemplos,Atributo clase) {
 		double entropia = 0.0;
 		
@@ -73,6 +79,4 @@ public class Atributo {
 		entropia = -(entropia / (ejemplos.size())); 
 		return entropia;
 	}
-
-
 }

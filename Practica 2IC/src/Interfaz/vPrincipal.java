@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 public class vPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -26,7 +27,7 @@ public class vPrincipal extends JFrame {
 		JButton botonCalcular = new JButton("Calcular");
 		JLabel solLabel = new JLabel("Soluci�n: ");
 		JTextField solTB = new JTextField();
-		
+		algoritmo = new Algoritmo();
 		cargarAtrib.addActionListener(new ActionListener() {
 			
 			@Override
@@ -38,7 +39,9 @@ public class vPrincipal extends JFrame {
 				if(op == fc.APPROVE_OPTION) {
 					try {
 						File fichero = fc.getSelectedFile();
-						algoritmo.setAtributos(LecturaDatos.readAtributos(fichero));
+						ArrayList<String> atributos = LecturaDatos.readAtributos(fichero);
+						//System.out.println(atributos);
+						algoritmo.setAtributos(atributos);
 						
 					}catch(Exception ex) {
 						JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS ATRIBUTOS", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -58,7 +61,9 @@ public class vPrincipal extends JFrame {
 				if(op == fc.APPROVE_OPTION) {
 					try {
 						File fichero = fc.getSelectedFile();
-						algoritmo.setEjemplos(LecturaDatos.readEjemplos(fichero));
+						ArrayList<ArrayList<String>> ejemplos = LecturaDatos.readEjemplos(fichero);
+						//System.out.println(ejemplos);
+						algoritmo.setEjemplos(ejemplos);
 						
 					}catch(Exception ex) {
 						JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS EJEMPLOS", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -72,8 +77,10 @@ public class vPrincipal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Nodo nodo = new Nodo();
-				algoritmo.ID3(algoritmo.getAtributos(), algoritmo.getEjemplos(),nodo );
-				
+				Nodo sol;
+				algoritmo.setPosiblesValoresClase();
+				sol = algoritmo.ID3(algoritmo.getAtributos(), algoritmo.getEjemplos(),nodo );
+				System.out.println(sol);
 			}
 		});
 		mainPanel.setLayout(new GridLayout(1,2));

@@ -10,10 +10,9 @@ public class Nodo {
 	private ArrayList<Nodo> hijos;
 	private boolean esHoja;
 	
-	public Nodo(String atributo, String valor, String clase) {
+	public Nodo(String atributo, String valor) {
 		this.setAtributo(atributo);
 		this.setValor(valor);
-		this.setClase(clase);
 		this.hijos = new ArrayList<Nodo>();
 	}
 	
@@ -53,7 +52,9 @@ public class Nodo {
 	public void setHijos(ArrayList<Nodo> hijos) {
 		this.hijos = hijos;
 	}
-	
+	public void setHijo(Nodo hijo) {
+		hijos.add(hijo);
+	}
 	public boolean esHoja() {
 		if(hijos.size() == 0) return true;
 		else return false;
