@@ -94,7 +94,7 @@ public class vPrincipal extends JFrame {
 		
 		this.setTitle("ID3");
 		this.setResizable(false);
-		this.setMinimumSize(new Dimension(900,300));
+		this.setMinimumSize(new Dimension(300,100));
 		this.setLocationRelativeTo(null);
 		this.add(mainPanel);
 		this.setVisible(true);
