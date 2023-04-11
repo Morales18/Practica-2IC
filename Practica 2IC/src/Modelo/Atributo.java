@@ -37,7 +37,7 @@ public class Atributo {
 	}
 
 	public double calcularEntropiaValor(ArrayList<Ejemplo> ejemplos, String valor,Atributo clase) {
-		int numEjemplos = ejemplos.size(); // Obtenemos el número total de ejemplos
+		int numEjemplos = ejemplos.size(); // Obtenemos el numero total de ejemplos
 		int conteo = 0; // Inicializamos el contador del valor
 		ArrayList<String> posiblesClases = clase.getPosiblesValores();
 		int[] contadorClases = new int[clase.getPosiblesValores().size()];
@@ -71,12 +71,13 @@ public class Atributo {
 	public Double calcularEntropiaAtributo(ArrayList<Ejemplo> ejemplos,Atributo clase) {
 		double entropia = 0.0;
 		
-		for (String valor : posiblesValores) { // valoresPosibles es una lista de todos los valores posibles que se pueden encontrar en la posición dada
+		for (String valor : posiblesValores) { // valoresPosibles es una lista de todos los valores posibles que se pueden encontrar en la posicion dada
 			double entropiaValor = calcularEntropiaValor(ejemplos,valor, clase); // calculamos la probabilidad de cada valor
 			entropia+= entropiaValor;
-			 // Calculamos la entropía
+			// Calculamos la entropia
 		}
 		entropia = -(entropia / (ejemplos.size())); 
+		System.out.println(nombre + " " + entropia);
 		return entropia;
 	}
 }

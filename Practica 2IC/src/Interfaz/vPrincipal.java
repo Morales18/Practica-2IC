@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class vPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private Algoritmo algoritmo;
+	private vSolucion solucion;
 	
 	public vPrincipal(){
 	    initGUI();
@@ -25,7 +26,7 @@ public class vPrincipal extends JFrame {
 		JButton cargarAtrib = new JButton("Cargar Atributos");
 		JButton cargarEjemp = new JButton("Cargar Ejemplos");
 		JButton botonCalcular = new JButton("Calcular");
-		JLabel solLabel = new JLabel("Soluci�n: ");
+		JLabel solLabel = new JLabel("Solucion: ");
 		JTextField solTB = new JTextField();
 		algoritmo = new Algoritmo();
 		cargarAtrib.addActionListener(new ActionListener() {
@@ -76,13 +77,14 @@ public class vPrincipal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Nodo nodo = new Nodo();
+				//Nodo nodo = new Nodo();
 				Nodo sol;
 				algoritmo.setPosiblesValoresClase();
-				sol = algoritmo.ID3(algoritmo.getAtributos(), algoritmo.getEjemplos(),nodo );
-				System.out.println(sol);
+				sol = algoritmo.ID3(algoritmo.getAtributos(), algoritmo.getEjemplos());
+				solucion = new vSolucion(sol);
 			}
 		});
+		
 		mainPanel.setLayout(new GridLayout(1,2));
 		mainPanel.add(cargarAtrib);
 		mainPanel.add(cargarEjemp);

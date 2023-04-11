@@ -2,11 +2,15 @@ package Modelo;
 
 import java.util.ArrayList;
 
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
+
 public class Algoritmo {
 	
 	private ArrayList<Atributo> atributos;
 	private ArrayList<Ejemplo> ejemplos;
 	private ArrayList<String> posiblesValoresClase;
+	
 	public Algoritmo() {
 		this.atributos = new ArrayList<Atributo>();
 		this.ejemplos = new ArrayList<Ejemplo>();
@@ -18,11 +22,13 @@ public class Algoritmo {
 
 	public void setAtributos(ArrayList<String> strings) {
 		Atributo aux;
+		//strings.remove(strings.size()-1);
 		for(int i = 0; i < strings.size(); i++) {
 			aux = new Atributo(strings.get(i), i);
 			atributos.add(aux);
 		}
 	}
+	
 	public void setPosiblesValoresClase(){
 		this.posiblesValoresClase = calcularPosiblesValoresClase(atributos.get(atributos.size()-1));
 
@@ -41,28 +47,89 @@ public class Algoritmo {
 		}
 	}
 	
-	public Nodo ID3 (ArrayList<Atributo> atributos1, ArrayList<Ejemplo> ejemplos1, Nodo nodo) {
-		String claseMayoritaria = calcularClase(ejemplos1);
-		if (atributos1.isEmpty()){
-			nodo.setClase(claseMayoritaria);
+	public Nodo ID3 (ArrayList<Atributo> atributos, ArrayList<Ejemplo> ejemplos) {
+		if(ejemplos.isEmpty()) {
+			return null;
 		}
-		else{
-			Atributo a = calcularMaximaGanancia(atributos1,ejemplos1);
+		
+		String claseMayoritaria = calcularClase(ejemplos);
+		
+		if (atributos.isEmpty() || mismaClase(ejemplos)){
+			return new Nodo(claseMayoritaria);
+		}
+		else {
+			Atributo a = calcularMaximaGanancia(atributos, ejemplos);
+			Nodo nodo = new Nodo(a);
 			for (int i = 0; i < a.getPosiblesValores().size();i++){
-				Nodo hijo = new Nodo(a.getNombre(),a.getPosiblesValores().get(i));
-				nodo.setHijo(hijo);
-				ArrayList<Atributo> atributos2 = atributos1;
-				atributos2.remove(a);
-				ArrayList<Ejemplo> ejemplos2 = ejemplos1;
-				for(Ejemplo e : ejemplos2){
-					e.getValores().remove(a.getPosiblesValores().get(i));
+				ArrayList<Ejemplo> ejRestantes = ejemplosRestantes(a.getPosiblesValores().get(i), ejemplos);
+				ArrayList<Atributo> atribRestantes = atributos;
+				atribRestantes.remove(a);
+				
+				Nodo hijo = new Nodo(a.getNombre(), a.getPosiblesValores().get(i));
+				Nodo aux = ID3(atribRestantes, ejRestantes);
+				if(aux != null) {
+					hijo.setHijo(aux);
+					//arbol.addEdge();
 				}
-				ID3(atributos2,ejemplos2,hijo);
+					
+				nodo.setHijo(hijo);
 			}
+			return nodo;
 		}
-		return nodo;
 	}
 	
+	public boolean mismaClase(ArrayList<Ejemplo> ejemplos) {
+		String claseAux = ejemplos.get(0).getClase();
+		for(int i = 1; i < ejemplos.size(); i++) {
+			if(!ejemplos.get(i).getClase().equals(claseAux)) return false;
+		}
+		return true;
+	}
+	
+	public ArrayList<Ejemplo> ejemplosRestantes(String valor, ArrayList<Ejemplo> ejemplos){
+		ArrayList<Ejemplo> restantes = new ArrayList<Ejemplo>();
+		
+		for(Ejemplo e : ejemplos){
+			if(e.getValores().contains(valor)) {
+				restantes.add(e);
+			}
+		}
+		
+		return restantes;
+	}
+	
+	/*
+	 public static NodoDecision construirArbol(List<Ejemplo> ejemplos, Map<String, Atributo> atributos) {
+        if (ejemplos.isEmpty()) {
+            return null;
+        }
+        String clase = obtenerClaseMasFrecuente(ejemplos);
+        if (clase != null) {
+            return new NodoDecision(clase);
+        }
+        String mejorAtributo = obtenerMejorAtributo(ejemplos, atributos);
+        NodoDecision nodo = new NodoDecision(mejorAtributo);
+        for (String valor : atributos.get(mejorAtributo).getValores()) {
+            List<Ejemplo> ejemplosConValor = obtenerEjemplosConValor(ejemplos, mejorAtributo, valor);
+            Map<String, Atributo> atributosRestantes = new HashMap<>(atributos);
+            atributosRestantes.remove(mejorAtributo);
+            NodoDecision subarbol = construirArbol(ejemplosConValor, atributosRestantes);
+            nodo.setRama(valor, subarbol);
+        }
+        return nodo;
+    }
+	 
+	 public static List<Ejemplo> obtenerEjemplosConValor(List<Ejemplo> ejemplos, Atributo atributo, String valor) {
+		    List<Ejemplo> ejemplosConValor = new ArrayList<>();
+		    for (Ejemplo ejemplo : ejemplos) {
+		        if (ejemplo.getValorAtributo(atributo).equals(valor)) {
+		            ejemplosConValor.add(ejemplo);
+		        }
+		    }
+		    return ejemplosConValor;
+		}
+	 
+*/
 	public ArrayList<String> calcularPosiblesValoresClase(Atributo atributo) {
 		ArrayList<String> valores = new ArrayList<String>();
 		
@@ -80,6 +147,7 @@ public class Algoritmo {
 		atributo.setPosiblesValores(valores);
 		return valores;
 	}
+	
 	public void calcularPosiblesValores(Atributo atributo) {
 		ArrayList<String> valores = new ArrayList<String>();
 		
@@ -98,7 +166,6 @@ public class Algoritmo {
 	}
 	
 	public String calcularClase(ArrayList<Ejemplo> ejemplos) {
-		
 		int[] contador = new int[this.posiblesValoresClase.size()];
 		int max = 0;
 		int pos = 0;
@@ -120,14 +187,21 @@ public class Algoritmo {
 		
 		return this.posiblesValoresClase.get(pos);
 	}
+	
 	public Atributo calcularMaximaGanancia(ArrayList<Atributo> atributos, ArrayList<Ejemplo> ejemplos){
 		ArrayList<Double> entropias = new ArrayList<Double>();
 		int indice = 0;
 		//La entropía no puede ser mayor que 1 por eso inicializamos el menor a 1
-		System.out.println("Prueba");
 		double min = 1;
-		for (int i = 0; i < atributos.size() - 1;i++){
-			if(atributos.get(i).getPosiblesValores() == null)calcularPosiblesValores(atributos.get(i));
+		
+		for(int i = 0; i < ejemplos.size(); i++) {
+			for(int j = 0; j < ejemplos.get(i).getValores().size(); j++) {
+				System.out.println(ejemplos.get(i).getValores().get(j));
+			}
+		}
+		
+		for (int i = 0; i < atributos.size()-1; i++){
+			if(atributos.get(i).getPosiblesValores() == null) calcularPosiblesValores(atributos.get(i));
 			double aux = atributos.get(i).calcularEntropiaAtributo(ejemplos, atributos.get(atributos.size()-1));
 			System.out.println(aux);
 			entropias.add(atributos.get(i).calcularEntropiaAtributo(ejemplos, atributos.get(atributos.size()-1)));
