@@ -10,7 +10,6 @@ import java.util.List;
 
 public class LecturaDatos {
 
-	//TODO HACER CATCH
     public static ArrayList<String> readAtributos(File fichero) throws IOException {
     	FileReader lector = new FileReader(fichero);
         BufferedReader buffer = new BufferedReader(lector);
@@ -25,8 +24,6 @@ public class LecturaDatos {
         return atributos;
     }
     
-    
-    //TODO HACER CATCH
     public static ArrayList<ArrayList<String>> readEjemplos(File fichero) throws IOException {
     	FileReader lector = new FileReader(fichero);
         BufferedReader buffer = new BufferedReader(lector);
@@ -48,5 +45,3 @@ public class LecturaDatos {
         return ejemplos;
     }
 }
-
-

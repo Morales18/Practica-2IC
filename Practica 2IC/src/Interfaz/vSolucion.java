@@ -1,14 +1,10 @@
 package Interfaz;
 
 import javax.swing.JFrame;
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
-
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
-
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.view.mxGraph;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 
@@ -16,6 +12,7 @@ import Modelo.Nodo;
 
 
 public class vSolucion extends JFrame{
+	private static final long serialVersionUID = 1L;
 	private Nodo raiz;
 
     public vSolucion(Nodo raiz) {

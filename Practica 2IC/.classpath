@@ -6,9 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/smarc/Desktop/Uni/4/IC/jgrapht-1.5.1/lib/jgrapht-core-1.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/smarc/Desktop/Uni/4/IC/jgrapht-1.5.1/lib/jgrapht-demo-1.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/smarc/Desktop/Uni/4/IC/jgrapht-1.5.1/lib/jgrapht-ext-1.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/smarc/Downloads/jgraphx.jar"/>
+	<classpathentry kind="lib" path="C:/Users/patri/Downloads/jgraphx.jar"/>
+	<classpathentry kind="lib" path="C:/Users/patri/Downloads/jgrapht-demo-1.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,11 +1,9 @@
 package Interfaz;
 
 import javax.swing.*;
-
 import Modelo.Algoritmo;
 import Modelo.LecturaDatos;
 import Modelo.Nodo;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -77,7 +75,6 @@ public class vPrincipal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Nodo nodo = new Nodo();
 				Nodo sol;
 				algoritmo.setPosiblesValoresClase();
 				sol = algoritmo.ID3(algoritmo.getAtributos(), algoritmo.getEjemplos());
@@ -89,8 +86,6 @@ public class vPrincipal extends JFrame {
 		mainPanel.add(cargarAtrib);
 		mainPanel.add(cargarEjemp);
 		mainPanel.add(botonCalcular);
-		//mainPanel.add(solLabel);
-		//mainPanel.add(solTB);
 		
 		this.setTitle("ID3");
 		this.setResizable(false);
@@ -113,5 +108,4 @@ public class vPrincipal extends JFrame {
 			}
 		});
 	}
-	
 }

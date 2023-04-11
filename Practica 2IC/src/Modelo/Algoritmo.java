@@ -2,9 +2,6 @@ package Modelo;
 
 import java.util.ArrayList;
 
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
-
 public class Algoritmo {
 	
 	private ArrayList<Atributo> atributos;
@@ -98,38 +95,6 @@ public class Algoritmo {
 		return restantes;
 	}
 	
-	/*
-	 public static NodoDecision construirArbol(List<Ejemplo> ejemplos, Map<String, Atributo> atributos) {
-        if (ejemplos.isEmpty()) {
-            return null;
-        }
-        String clase = obtenerClaseMasFrecuente(ejemplos);
-        if (clase != null) {
-            return new NodoDecision(clase);
-        }
-        String mejorAtributo = obtenerMejorAtributo(ejemplos, atributos);
-        NodoDecision nodo = new NodoDecision(mejorAtributo);
-        for (String valor : atributos.get(mejorAtributo).getValores()) {
-            List<Ejemplo> ejemplosConValor = obtenerEjemplosConValor(ejemplos, mejorAtributo, valor);
-            Map<String, Atributo> atributosRestantes = new HashMap<>(atributos);
-            atributosRestantes.remove(mejorAtributo);
-            NodoDecision subarbol = construirArbol(ejemplosConValor, atributosRestantes);
-            nodo.setRama(valor, subarbol);
-        }
-        return nodo;
-    }
-	 
-	 public static List<Ejemplo> obtenerEjemplosConValor(List<Ejemplo> ejemplos, Atributo atributo, String valor) {
-		    List<Ejemplo> ejemplosConValor = new ArrayList<>();
-		    for (Ejemplo ejemplo : ejemplos) {
-		        if (ejemplo.getValorAtributo(atributo).equals(valor)) {
-		            ejemplosConValor.add(ejemplo);
-		        }
-		    }
-		    return ejemplosConValor;
-		}
-	 
-*/
 	public ArrayList<String> calcularPosiblesValoresClase(Atributo atributo) {
 		ArrayList<String> valores = new ArrayList<String>();
 		
@@ -191,7 +156,7 @@ public class Algoritmo {
 	public Atributo calcularMaximaGanancia(ArrayList<Atributo> atributos, ArrayList<Ejemplo> ejemplos){
 		ArrayList<Double> entropias = new ArrayList<Double>();
 		int indice = 0;
-		//La entropía no puede ser mayor que 1 por eso inicializamos el menor a 1
+		//La entropia no puede ser mayor que 1 por eso inicializamos el menor a 1
 		double min = 1;
 		
 		for(int i = 0; i < ejemplos.size(); i++) {
