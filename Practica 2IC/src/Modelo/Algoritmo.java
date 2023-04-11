@@ -159,6 +159,7 @@ public class Algoritmo {
 		//La entropia no puede ser mayor que 1 por eso inicializamos el menor a 1
 		double min = 1;
 		
+		// Muestra por pantalla los valores de las ganancias para comprobacion nuestra
 		for(int i = 0; i < ejemplos.size(); i++) {
 			for(int j = 0; j < ejemplos.get(i).getValores().size(); j++) {
 				System.out.println(ejemplos.get(i).getValores().get(j));
@@ -168,9 +169,7 @@ public class Algoritmo {
 		for (int i = 0; i < atributos.size()-1; i++){
 			if(atributos.get(i).getPosiblesValores() == null) calcularPosiblesValores(atributos.get(i));
 			double aux = atributos.get(i).calcularEntropiaAtributo(ejemplos, atributos.get(atributos.size()-1));
-			System.out.println(aux);
 			entropias.add(atributos.get(i).calcularEntropiaAtributo(ejemplos, atributos.get(atributos.size()-1)));
-			System.out.println("Entropia: " + atributos.get(i).getNombre() + " " +  entropias.get(i));
 			if(entropias.get(i) < min){
 				indice = i;
 				min = entropias.get(i);

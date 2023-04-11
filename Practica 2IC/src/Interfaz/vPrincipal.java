@@ -39,7 +39,6 @@ public class vPrincipal extends JFrame {
 					try {
 						File fichero = fc.getSelectedFile();
 						ArrayList<String> atributos = LecturaDatos.readAtributos(fichero);
-						//System.out.println(atributos);
 						algoritmo.setAtributos(atributos);
 						
 					}catch(Exception ex) {
@@ -61,7 +60,6 @@ public class vPrincipal extends JFrame {
 					try {
 						File fichero = fc.getSelectedFile();
 						ArrayList<ArrayList<String>> ejemplos = LecturaDatos.readEjemplos(fichero);
-						//System.out.println(ejemplos);
 						algoritmo.setEjemplos(ejemplos);
 						
 					}catch(Exception ex) {

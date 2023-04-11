@@ -60,7 +60,6 @@ public class Atributo {
 		double entropiaValor = 0;
 		for(int j = 0; j < posiblesClases.size();j++){
 			if(contadorClases[j] != 0){
-				System.out.println(contadorClases[j]);
 				double division = (double)contadorClases[j] / (double)conteo;
 				double logaritmo = Math.log(division) / Math.log(2);
 				entropiaValor += contadorClases[j]* logaritmo;
