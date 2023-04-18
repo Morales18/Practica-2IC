@@ -1,18 +1,19 @@
 package Interfaz;
 
 import javax.swing.*;
-
 import Modelo.Algoritmo;
 import Modelo.LecturaDatos;
-
+import Modelo.Nodo;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 public class vPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private Algoritmo algoritmo;
+	private vSolucion solucion;
 	
 	public vPrincipal(){
 	    initGUI();
@@ -23,9 +24,9 @@ public class vPrincipal extends JFrame {
 		JButton cargarAtrib = new JButton("Cargar Atributos");
 		JButton cargarEjemp = new JButton("Cargar Ejemplos");
 		JButton botonCalcular = new JButton("Calcular");
-		JLabel solLabel = new JLabel("Solución: ");
+		JLabel solLabel = new JLabel("Solucion: ");
 		JTextField solTB = new JTextField();
-		
+		algoritmo = new Algoritmo();
 		cargarAtrib.addActionListener(new ActionListener() {
 			
 			@Override
@@ -37,7 +38,8 @@ public class vPrincipal extends JFrame {
 				if(op == fc.APPROVE_OPTION) {
 					try {
 						File fichero = fc.getSelectedFile();
-						algoritmo.setAtributos(LecturaDatos.readAtributos(fichero));
+						ArrayList<String> atributos = LecturaDatos.readAtributos(fichero);
+						algoritmo.setAtributos(atributos);
 						
 					}catch(Exception ex) {
 						JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS ATRIBUTOS", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -57,7 +59,8 @@ public class vPrincipal extends JFrame {
 				if(op == fc.APPROVE_OPTION) {
 					try {
 						File fichero = fc.getSelectedFile();
-						algoritmo.setEjemplos(LecturaDatos.readEjemplos(fichero));
+						ArrayList<ArrayList<String>> ejemplos = LecturaDatos.readEjemplos(fichero);
+						algoritmo.setEjemplos(ejemplos);
 						
 					}catch(Exception ex) {
 						JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS EJEMPLOS", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -66,16 +69,25 @@ public class vPrincipal extends JFrame {
 			}
 		});
 		
+		botonCalcular.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Nodo sol;
+				algoritmo.setPosiblesValoresClase();
+				sol = algoritmo.ID3(algoritmo.getAtributos(), algoritmo.getEjemplos());
+				solucion = new vSolucion(sol);
+			}
+		});
+		
 		mainPanel.setLayout(new GridLayout(1,2));
 		mainPanel.add(cargarAtrib);
 		mainPanel.add(cargarEjemp);
 		mainPanel.add(botonCalcular);
-		//mainPanel.add(solLabel);
-		//mainPanel.add(solTB);
 		
 		this.setTitle("ID3");
 		this.setResizable(false);
-		this.setMinimumSize(new Dimension(900,300));
+		this.setMinimumSize(new Dimension(300,100));
 		this.setLocationRelativeTo(null);
 		this.add(mainPanel);
 		this.setVisible(true);
@@ -94,5 +106,4 @@ public class vPrincipal extends JFrame {
 			}
 		});
 	}
-	
 }
