@@ -9,17 +9,28 @@ public class Nodo {
 	private String clase;
 	private ArrayList<Nodo> hijos;
 	private boolean esHoja;
+	private boolean esAtrib;
 	
-	public Nodo(String atributo, String valor, String clase) {
+	public Nodo(String atributo, String valor) {
 		this.setAtributo(atributo);
 		this.setValor(valor);
-		this.setClase(clase);
 		this.hijos = new ArrayList<Nodo>();
 	}
 	
 	public Nodo() {
 		this.setAtributo("raiz");
 		this.hijos = new ArrayList<Nodo>();
+	}
+	
+	public Nodo(Atributo a) {
+		this.setAtributo(a.getNombre());
+		this.setEsAtrib(true);
+		this.hijos = new ArrayList<Nodo>();
+	}
+	
+	public Nodo(String clase) {
+		this.clase = clase;
+		this.esHoja = true;
 	}
 
 	public String getAtributo() {
@@ -53,9 +64,36 @@ public class Nodo {
 	public void setHijos(ArrayList<Nodo> hijos) {
 		this.hijos = hijos;
 	}
-	
+	public void setHijo(Nodo hijo) {
+		hijos.add(hijo);
+	}
 	public boolean esHoja() {
 		if(hijos.size() == 0) return true;
 		else return false;
+	}
+
+	public boolean isEsHoja() {
+		return esHoja;
+	}
+
+	public void setEsHoja(boolean esHoja) {
+		this.esHoja = esHoja;
+	}
+
+	public boolean isEsAtrib() {
+		return esAtrib;
+	}
+
+	public void setEsAtrib(boolean esAtrib) {
+		this.esAtrib = esAtrib;
+	}
+	
+	public boolean checkNull() {
+		boolean ok = false;
+		for(Nodo hijo : hijos) {
+			if(hijo == null) ok = true;
+		}
+		
+		return ok;
 	}
 }
